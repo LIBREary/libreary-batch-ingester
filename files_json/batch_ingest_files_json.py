@@ -51,6 +51,10 @@ for directory in subdirs:
         {'field': 'author', 'value': 'Mike Greenberg'},
         {'field': 'owner', 'value': 'ESPN, a Disney Company'}
         ]
+        
+        metadata_schema object is:
+        
+        ['collection', 'directory', 'author', 'owner']
         """
 
         # Now, we just ingest the file and metadata
