@@ -54,7 +54,7 @@ for directory in subdirs:
         """
 
         # Now, we just ingest the file and metadata
-        obj_id = libreary.ingest(file,
+        obj_id = la.ingest(file,
                          # Levels 
                          ["low"],
                          "Description",
