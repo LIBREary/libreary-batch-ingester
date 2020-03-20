@@ -12,7 +12,7 @@ import json
 import os
 
 # Get Libreary object
-la = Libreary("../config_dir")
+la = Libreary("../run_dir/config")
 
 # Go through directories
 subdirs = [d for d in os.listdir(".") if os.path.isdir(d)]
