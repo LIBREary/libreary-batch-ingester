@@ -4,8 +4,7 @@ Example script to ingest a bunch of files in a set of directories.
 This script assumes it's only one level deep, but it could be easily modified 
     to not make that assumption
 
-Each file has an optional JSON metadata file in the same directory as it which contains
-    its metadata. This assumption could also be easily modified
+Each file has optional EXIF metadata attached to it.
 """
 from libreary import Libreary
 import json
