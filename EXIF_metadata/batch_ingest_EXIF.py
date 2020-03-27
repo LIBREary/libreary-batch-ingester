@@ -10,6 +10,8 @@ Each file has an optional JSON metadata file in the same directory as it which c
 from libreary import Libreary
 import json
 import os
+import exiftool
+
 
 # Get Libreary object
 la = Libreary("../run_dir/config")
@@ -20,25 +22,20 @@ for directory in subdirs:
     # Ignore second-level subdirs
     files = [f for f in os.listdir(directory) if not os.path.isdir(f)]
     for file in files:
-        # We only want to deal with metadata files
-        # If their corresponding data file has come up
-        if file.split(".")[1] == "json":
-                    continue
-        
         # These fields are set in metadata always.
-        metadata_schema = ["collection", "directory"]
+        metadata_schema = ["collection"]
         metadata = [
-                    {"field": "collection", "value": "file_json"},
-                    {"field": "directory", "value": directory}
+                    {"field": "collection", "value": "exif"},
                     ]
         raw_filename = file.split(".")[0]
         
-        # JSON Metadata is optional
+        # EXIF Metadata is optional
         try:
-            extra_md = json.load(open(f"{directory}/{raw_filename}.json"))
-            metadata_schema.extend(extra_md.keys())
-            for key in extra_md.keys():
-                metadata.append({"field": key, "value": extra_md[key]})
+            with exiftool.ExifTool() as et:
+                extra_md = et.get_metadata_batch(file)[0]
+                metadata_schema.extend(extra_md.keys())
+                for key in extra_md.keys():
+                    metadata.append({"field": key, "value": extra_md[key]})
 
         except FileNotFoundError:
             pass
@@ -46,7 +43,7 @@ for directory in subdirs:
         """
         By here, metadata object looks like this:
         [
-        {'field': 'collection', 'value': 'file_json'},
+        {'field': 'collection', 'value': 'exif'},
         {'field': 'directory', 'value': 'directory_1'},
         {'field': 'author', 'value': 'Mike Greenberg'},
         {'field': 'owner', 'value': 'ESPN, a Disney Company'}
