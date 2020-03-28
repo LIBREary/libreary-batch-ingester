@@ -36,7 +36,7 @@ for directory in subdirs:
                 for key in extra_md.keys():
                     metadata.append({"field": key, "value": extra_md[key]})
 
-        except FileNotFoundError:
+        except Exception:
             pass
 
         """
